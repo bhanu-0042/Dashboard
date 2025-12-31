@@ -1,0 +1,8 @@
+{
+  "name": "HAMSAA Manager Dashboard",
+  "description": "A high-end management dashboard featuring a professional sidebar with inventory, billing, and reporting modules, integrated with Gemini AI for business insights.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone"
+  ]
+}
