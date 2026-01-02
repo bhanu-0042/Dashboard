@@ -1,7 +1,6 @@
-
 import React, { useState } from 'react';
 import Sidebar from './components/Sidebar';
-import DashboardContent from './components/DashboardContent';
+import DashboardContent from './components/Inventory';
 import OrdersContent from './components/OrdersContent';
 import PurchaseOrdersContent from './components/PurchaseOrdersContent';
 import BillingContent from './components/BillingContent';

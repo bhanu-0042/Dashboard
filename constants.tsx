@@ -1,4 +1,3 @@
-
 import { 
   LayoutGrid, 
   Box, 
@@ -12,13 +11,15 @@ import {
   Bell,
   Settings,
   HelpCircle,
-  LogOut
+  LogOut,
+  ListOrdered
 } from 'lucide-react';
 import { MenuItem } from './types';
 
 export const MAIN_MENU_ITEMS: MenuItem[] = [
   { id: 'dashboard', label: 'Dashboard', icon: LayoutGrid, path: '/' },
   { id: 'inventory', label: 'Inventory', icon: Box, path: '/inventory' },
+  { id: 'orders', label: 'Orders', icon: ListOrdered, path: '/orders' },
   { id: 'purchase-orders', label: 'Purchase Orders', icon: ShoppingCart, path: '/purchase-orders' },
   { id: 'billing', label: 'Billing', icon: FileText, path: '/billing' },
   { id: 'payment', label: 'Payments', icon: CreditCard, path: '/payment' },
