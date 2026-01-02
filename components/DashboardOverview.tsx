@@ -5,31 +5,16 @@ import {
   Users, 
   ShoppingCart, 
   DollarSign, 
-  ArrowUpRight, 
-  ArrowDownRight,
-  PlusCircle,
-  FileText,
-  UserPlus,
-  Bell,
-  LayoutGrid,
   BarChart3,
   Package,
   Box,
-  CreditCard,
-  PieChart as PieIcon,
-  BarChart as BarIcon,
-  Search,
-  MoreVertical,
-  ChevronRight,
-  CheckCircle2,
   Clock,
-  Truck,
-  XCircle,
-  AlertTriangle,
   AlertCircle,
-  ArrowRight,
-  RefreshCcw,
-  History
+  ChevronRight,
+  ChevronDown,
+  CreditCard,
+  AlertTriangle,
+  Activity
 } from 'lucide-react';
 import { 
   AreaChart, 
@@ -42,667 +27,396 @@ import {
   PieChart,
   Pie,
   Cell,
-  Legend,
   BarChart,
   Bar,
-  Rectangle
+  Legend
 } from 'recharts';
 
 const REVENUE_DATA = [
-  { name: 'Jan', revenue: 45000 },
-  { name: 'Feb', revenue: 52000 },
-  { name: 'Mar', revenue: 48000 },
-  { name: 'Apr', revenue: 61000 },
-  { name: 'May', revenue: 55000 },
-  { name: 'Jun', revenue: 67000 },
-  { name: 'Jul', revenue: 72000 },
+  { name: 'Mon', revenue: 145000 },
+  { name: 'Tue', revenue: 152000 },
+  { name: 'Wed', revenue: 148000 },
+  { name: 'Thu', revenue: 161000 },
+  { name: 'Fri', revenue: 155000 },
+  { name: 'Sat', revenue: 167000 },
+  { name: 'Sun', revenue: 172000 },
 ];
 
-const CATEGORY_DATA = [
-  { name: 'Bakery & Sweets', value: 450 },
-  { name: 'Fragrances', value: 320 },
-  { name: 'Snacks & Savory', value: 280 },
-  { name: 'Beverages', value: 150 },
+const STOCK_STATUS_DATA = [
+  { name: 'In Stock', value: 2450, color: '#5D8AA8' },
+  { name: 'Low Stock', value: 85, color: '#f59e0b' },
+  { name: 'Out of Stock', value: 12, color: '#ef4444' },
+  { name: 'Near Expiry', value: 45, color: '#ec4899' },
 ];
 
-const TOP_PRODUCTS_DATA = [
-  { name: 'Choco Cookies', sales: 1200, revenue: 15000 },
-  { name: 'Rose Perfume', sales: 850, revenue: 72250 },
-  { name: 'Berry Juice', sales: 720, revenue: 2520 },
-  { name: 'Salt Chips', sales: 680, revenue: 3393 },
-  { name: 'Beef Patties', sales: 450, revenue: 6750 },
+const TOP_PRODUCTS = [
+  { name: 'Dark Choc', sales: 450, color: '#5D8AA8' },
+  { name: 'Rose Parfum', sales: 380, color: '#4a718c' },
+  { name: 'Truffle Oil', sales: 320, color: '#3d5d73' },
+  { name: 'Cold Brew', sales: 290, color: '#354e60' },
+  { name: 'Oud Mist', sales: 210, color: '#2f4352' },
 ];
 
-const RETAILER_DATA = [
-  { name: 'Gourmet Plaza', volume: 85, revenue: 12400 },
-  { name: 'City Mart', volume: 72, revenue: 9800 },
-  { name: 'Fresh Stop', volume: 68, revenue: 8500 },
-  { name: 'Elite Grocers', volume: 55, revenue: 7200 },
-  { name: 'Mega Store', volume: 42, revenue: 5600 },
+const RETAILER_PERFORMANCE = [
+  { name: 'Grand Deli', orders: 84 },
+  { name: 'Aura Boutique', orders: 62 },
+  { name: 'Heritage Club', orders: 48 },
+  { name: 'Artisan Co', orders: 35 },
+  { name: 'Luxe Hosp.', orders: 29 },
 ];
 
-const PAYMENT_SUMMARY_DATA = [
-  { name: 'Settled', value: 85000, color: '#10b981' },
-  { name: 'Pending', value: 12500, color: '#8b5cf6' },
-  { name: 'Overdue', value: 3400, color: '#f43f5e' },
-];
-
-const STOCK_LEVELS_DATA = [
-  { name: 'Bakery', current: 150, target: 200 },
-  { name: 'Fragrance', current: 42, target: 100 },
-  { name: 'Snacks', current: 0, target: 150 },
-  { name: 'Beverage', current: 85, target: 120 },
-  { name: 'Frozen', current: 20, target: 80 },
+const PAYMENT_STATUS_DATA = [
+  { name: 'Completed', value: 780, color: '#5D8AA8' },
+  { name: 'Pending', value: 150, color: '#f59e0b' },
+  { name: 'Failed', value: 70, color: '#f43f5e' },
 ];
 
 const MOCK_RECENT_ORDERS = [
-  { id: '#ORD-2241', retailer: 'Gourmet Plaza', date: 'Oct 24, 2023', items: 12, total: 1240.50, status: 'Delivered', icon: CheckCircle2, color: 'text-emerald-500 bg-emerald-50' },
-  { id: '#ORD-2242', retailer: 'Sweet Bites Cafe', date: 'Oct 24, 2023', items: 5, total: 450.00, status: 'Shipped', icon: Truck, color: 'text-blue-500 bg-blue-50' },
-  { id: '#ORD-2243', retailer: 'City Mart Center', date: 'Oct 23, 2023', items: 28, total: 3200.75, status: 'Pending', icon: Clock, color: 'text-amber-500 bg-amber-50' },
-  { id: '#ORD-2244', retailer: 'Fragrance World', date: 'Oct 23, 2023', items: 2, total: 170.00, status: 'Delivered', icon: CheckCircle2, color: 'text-emerald-500 bg-emerald-50' },
-  { id: '#ORD-2245', retailer: 'Elite Grocers', date: 'Oct 22, 2023', items: 15, total: 980.20, status: 'Cancelled', icon: XCircle, color: 'text-rose-500 bg-rose-50' },
-  { id: '#ORD-2246', retailer: 'Metro Supermarket', date: 'Oct 22, 2023', items: 40, total: 5400.00, status: 'Shipped', icon: Truck, color: 'text-blue-500 bg-blue-50' },
-  { id: '#ORD-2247', retailer: 'Healthy Choice', date: 'Oct 21, 2023', items: 8, total: 320.50, status: 'Delivered', icon: CheckCircle2, color: 'text-emerald-500 bg-emerald-50' },
-  { id: '#ORD-2248', retailer: 'Quick Stop Mart', date: 'Oct 21, 2023', items: 10, total: 110.00, status: 'Pending', icon: Clock, color: 'text-amber-500 bg-amber-50' },
+  { id: '#ORD-991', retailer: 'The Grand Deli', date: 'Today, 2:45 PM', items: 24, total: 42400.50, status: 'Delivered' },
+  { id: '#ORD-992', retailer: 'Aura Boutique', date: 'Today, 1:20 PM', items: 12, total: 18900.00, status: 'Processing' },
+  { id: '#ORD-993', retailer: 'Heritage Club', date: 'Today, 11:05 AM', items: 8, total: 12500.25, status: 'Pending' },
+  { id: '#ORD-994', retailer: 'Artisan Bakery', date: 'Yesterday', items: 15, total: 9400.00, status: 'Delivered' },
 ];
 
-const INVENTORY_ALERTS = [
-  { id: 'AL-1', product: 'Sea Salt Chips', type: 'Stock Out', stock: 0, target: 150, severity: 'Critical', color: 'bg-rose-50 text-rose-600 border-rose-100', icon: AlertCircle },
-  { id: 'AL-2', product: 'Midnight Rose Perfume', type: 'Low Stock', stock: 42, target: 100, severity: 'Warning', color: 'bg-amber-50 text-amber-600 border-amber-100', icon: AlertTriangle },
-  { id: 'AL-3', product: 'Beef Burger Patty', type: 'Expired Stock', stock: 20, target: 80, severity: 'Critical', color: 'bg-rose-50 text-rose-600 border-rose-100', icon: XCircle },
-  { id: 'AL-4', product: 'Sparkling Berry Juice', type: 'Low Stock', stock: 85, target: 120, severity: 'Warning', color: 'bg-amber-50 text-amber-600 border-amber-100', icon: AlertTriangle },
-  { id: 'AL-5', product: 'Choco Cookies', type: 'Near Expiry', stock: 150, target: 200, severity: 'Info', color: 'bg-blue-50 text-blue-600 border-blue-100', icon: Clock },
-];
-
-const COLORS = ['#8b5cf6', '#a78bfa', '#10b981', '#f59e0b'];
+type SubTab = 'Overview' | 'Analytics' | 'Orders' | 'Inventory';
 
 const DashboardOverview: React.FC = () => {
-  const [activeSubTab, setActiveSubTab] = useState('overview');
-
-  const stats = [
-    { label: 'Total Sales', value: '$124,592', change: '+12.5%', trend: 'up', icon: DollarSign, color: 'bg-violet-600' },
-    { label: 'Pending Orders', value: '48', change: '+5.2%', trend: 'up', icon: Clock, color: 'bg-violet-400' },
-    { label: 'Total Customers', value: '1,284', change: '+2.4%', trend: 'up', icon: Users, color: 'bg-emerald-500' },
-    { label: 'Low Stock Items', value: '12', change: '+2', trend: 'down', icon: AlertTriangle, color: 'bg-rose-500' },
-  ];
-
-  const subNavItems = [
-    { id: 'overview', label: 'Overview', icon: LayoutGrid },
-    { id: 'analytics', label: 'Analytics', icon: BarChart3 },
-    { id: 'orders', label: 'Orders', icon: Package },
-    { id: 'inventory', label: 'Inventory', icon: Box },
-  ];
-
-  const quickActions = [
-    { label: 'Create Invoice', icon: FileText, color: 'text-violet-600', bgColor: 'bg-violet-50' },
-    { label: 'Add Product', icon: PlusCircle, color: 'text-violet-500', bgColor: 'bg-violet-50' },
-    { label: 'Add Retailer', icon: UserPlus, color: 'text-emerald-600', bgColor: 'bg-emerald-50' },
-    { label: 'Reports', icon: TrendingUp, color: 'text-amber-600', bgColor: 'bg-amber-50' },
-  ];
+  const [activeSubTab, setActiveSubTab] = useState<SubTab>('Overview');
+  const subTabs: SubTab[] = ['Overview', 'Analytics', 'Orders', 'Inventory'];
 
   return (
-    <div className="space-y-8 animate-in fade-in duration-700 max-w-full pb-10">
-      {/* Date and System Status Header */}
-      <div className="flex flex-col md:flex-row md:items-center justify-end gap-4 px-2">
-        <div className="flex items-center gap-3">
-          <div className="text-right hidden sm:block">
-            <p className="text-sm font-bold text-slate-800">Monday, Oct 24</p>
-            <p className="text-[10px] font-black text-violet-500 uppercase tracking-widest">System Status: Active</p>
-          </div>
-          <button className="p-3 bg-white rounded-2xl border border-slate-100 shadow-sm hover:shadow-md transition-all text-slate-400 hover:text-violet-600">
-            <Bell size={20} />
-          </button>
-        </div>
-      </div>
-
-      {/* Metrics Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 px-2">
-        {stats.map((stat, i) => (
-          <div key={i} className="bg-white p-6 rounded-[2rem] border border-slate-100 shadow-sm flex flex-col justify-between h-44 group hover:border-violet-100 transition-all">
-            <div className="flex justify-between items-start">
-              <div className={`${stat.color} p-3 rounded-2xl text-white shadow-lg shadow-violet-100`}>
-                <stat.icon size={20} />
+    <div className="space-y-8 animate-in fade-in duration-700 pb-10">
+      
+      {/* Primary Stats Grid */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        {[
+          { label: "Today's Sales", value: "₹1.24L", icon: DollarSign, change: "+8.2%", color: "brand" },
+          { label: "Pending Orders", value: "18", icon: Clock, change: "5 Urgent", color: "amber" },
+          { label: "Low Stock Items", value: "12", icon: AlertTriangle, change: "-3 Restocked", color: "rose" },
+          { label: "Total Customers", value: "142", icon: Users, change: "+12 New", color: "emerald" }
+        ].map((stat, i) => (
+          <div 
+            key={i} 
+            className={`bg-white p-6 rounded-[2.5rem] border shadow-sm relative overflow-hidden group hover:shadow-2xl hover:shadow-brand-200/20 transition-all duration-300
+              ${stat.color === 'brand' ? 'border-brand-200' :
+                stat.color === 'amber' ? 'border-amber-200' :
+                stat.color === 'rose' ? 'border-rose-200' :
+                'border-emerald-200'}`}
+          >
+            <div className="relative z-10">
+              <div className="flex items-center justify-between mb-4">
+                <div className={`p-3 rounded-2xl group-hover:scale-110 transition-transform ${
+                  stat.color === 'brand' ? 'bg-brand-50 text-brand-600' :
+                  stat.color === 'amber' ? 'bg-amber-50 text-amber-600' :
+                  stat.color === 'rose' ? 'bg-rose-50 text-rose-600' :
+                  'bg-emerald-50 text-emerald-600'
+                }`}>
+                  <stat.icon size={22} />
+                </div>
+                <div className={`text-[10px] font-black uppercase tracking-widest px-2 py-1 rounded-lg ${
+                  stat.color === 'brand' ? 'bg-brand-100 text-brand-600' :
+                  stat.color === 'amber' ? 'bg-amber-50 text-amber-500' :
+                  stat.color === 'rose' ? 'bg-rose-50 text-rose-500' :
+                  'bg-emerald-50 text-emerald-500'
+                }`}>
+                  {stat.change}
+                </div>
               </div>
-              <div className={`flex items-center gap-1 px-2 py-1 rounded-lg text-[10px] font-black ${stat.trend === 'up' ? 'bg-emerald-50 text-emerald-600' : 'bg-rose-50 text-rose-600'}`}>
-                {stat.trend === 'up' ? <ArrowUpRight size={12} /> : <ArrowDownRight size={12} />}
-                {stat.change}
-              </div>
-            </div>
-            <div>
-              <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">{stat.label}</p>
-              <h3 className="text-3xl font-black text-slate-800 tracking-tighter">{stat.value}</h3>
+              <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest leading-none">{stat.label}</p>
+              <h3 className="text-2xl font-black font-display text-gray-900 mt-2 tracking-tight">{stat.value}</h3>
             </div>
           </div>
         ))}
       </div>
 
-      {/* Mini Navigation Bar */}
-      <div className="px-2">
-        <div className="p-1.5 bg-white/50 backdrop-blur-xl border border-white/60 rounded-[1.5rem] w-fit flex items-center gap-1 shadow-sm">
-          {subNavItems.map((item) => {
-            const isActive = activeSubTab === item.id;
-            const Icon = item.icon;
-            return (
-              <button
-                key={item.id}
-                onClick={() => setActiveSubTab(item.id)}
-                className={`flex items-center gap-2 px-6 py-2.5 rounded-2xl text-[10px] font-black uppercase tracking-[0.1em] transition-all
-                  ${isActive 
-                    ? 'bg-violet-600 text-white shadow-lg shadow-violet-100' 
-                    : 'text-slate-500 hover:bg-white hover:text-violet-600'}`}
-              >
-                <Icon size={14} className={isActive ? 'animate-pulse' : ''} />
-                {item.label}
-              </button>
-            );
-          })}
-        </div>
+      {/* Sub-Nav Bar */}
+      <div className="flex items-center gap-2 overflow-x-auto no-scrollbar pb-2 px-1">
+        {subTabs.map((tab) => (
+          <button
+            key={tab}
+            onClick={() => setActiveSubTab(tab)}
+            className={`px-8 py-3.5 rounded-2xl text-xs font-black tracking-widest uppercase transition-all duration-300 border ${
+              activeSubTab === tab 
+                ? 'bg-brand-500 text-white border-brand-500' 
+                : 'bg-white text-gray-400 border-gray-100 hover:border-brand-200 hover:text-brand-600'
+            }`}
+          >
+            {tab}
+          </button>
+        ))}
       </div>
 
-      {/* Comprehensive Analytics Section */}
-      {activeSubTab === 'analytics' && (
-        <div className="space-y-6 px-2 animate-in slide-in-from-bottom-6 duration-700">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            {/* Top Selling Products - Horizontal Bar */}
-            <div className="bg-white p-8 rounded-[2.5rem] border border-slate-100 shadow-sm">
-              <div className="flex items-center gap-3 mb-8">
-                <div className="bg-amber-50 text-amber-600 p-2.5 rounded-xl">
-                  <TrendingUp size={20} />
-                </div>
+      {/* Conditional Content */}
+      <div className="space-y-6">
+        {activeSubTab === 'Overview' && (
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 animate-in slide-in-from-bottom-4 duration-500">
+            <div className="lg:col-span-2 bg-white p-8 rounded-[2.5rem] border border-brand-100 shadow-sm">
+              <div className="flex items-center justify-between mb-8">
                 <div>
-                  <h3 className="text-lg font-black text-slate-800 leading-none">Top Selling Products</h3>
-                  <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">By Unit Sales</span>
+                  <h4 className="text-lg font-black font-display text-gray-900 tracking-tight">Sales Trend</h4>
+                  <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Performance Metrics</p>
+                </div>
+                <div className="p-2 bg-brand-50 text-brand-500 rounded-xl">
+                  <BarChart3 size={18} />
                 </div>
               </div>
               <div className="h-[300px] w-full">
                 <ResponsiveContainer width="100%" height="100%">
-                  <BarChart layout="vertical" data={TOP_PRODUCTS_DATA} margin={{ left: 40, right: 20 }}>
-                    <XAxis type="number" hide />
-                    <YAxis 
-                      dataKey="name" 
-                      type="category" 
-                      axisLine={false} 
-                      tickLine={false}
-                      tick={{fill: '#64748b', fontSize: 11, fontWeight: 700}}
-                    />
+                  <AreaChart data={REVENUE_DATA}>
+                    <defs>
+                      <linearGradient id="colorRev" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="5%" stopColor="#5D8AA8" stopOpacity={0.1}/>
+                        <stop offset="95%" stopColor="#5D8AA8" stopOpacity={0}/>
+                      </linearGradient>
+                    </defs>
+                    <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
+                    <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{fill: '#94a3b8', fontSize: 10, fontWeight: 700}} dy={10} />
+                    <YAxis hide={true} />
                     <Tooltip 
-                      cursor={{fill: '#f8fafc'}}
-                      contentStyle={{borderRadius: '16px', border: 'none', boxShadow: '0 10px 30px rgba(0,0,0,0.1)'}}
+                      contentStyle={{borderRadius: '16px', border: 'none', boxShadow: '0 10px 25px -5px rgba(0,0,0,0.1)', fontSize: '12px', fontWeight: 'bold'}}
                     />
-                    <Bar 
-                      dataKey="sales" 
-                      fill="#8b5cf6" 
-                      radius={[0, 10, 10, 0]}
-                      barSize={24}
-                    />
-                  </BarChart>
+                    <Area type="monotone" dataKey="revenue" stroke="#5D8AA8" strokeWidth={4} fill="url(#colorRev)" fillOpacity={1} />
+                  </AreaChart>
                 </ResponsiveContainer>
               </div>
             </div>
 
-            {/* Retailer Performance - Vertical Bar */}
-            <div className="bg-white p-8 rounded-[2.5rem] border border-slate-100 shadow-sm">
-              <div className="flex items-center gap-3 mb-8">
-                <div className="bg-emerald-50 text-emerald-600 p-2.5 rounded-xl">
-                  <Users size={20} />
-                </div>
-                <div>
-                  <h3 className="text-lg font-black text-slate-800 leading-none">Retailer Performance</h3>
-                  <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Revenue by Partner</span>
-                </div>
-              </div>
-              <div className="h-[300px] w-full">
+            <div className="bg-white p-8 rounded-[2.5rem] border border-brand-100 shadow-sm">
+              <h4 className="text-lg font-black font-display text-gray-900 tracking-tight mb-8">Stock Status</h4>
+              <div className="h-[220px] w-full">
                 <ResponsiveContainer width="100%" height="100%">
-                  <BarChart data={RETAILER_DATA}>
-                    <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
-                    <XAxis 
-                      dataKey="name" 
-                      axisLine={false} 
-                      tickLine={false}
-                      tick={{fill: '#64748b', fontSize: 10, fontWeight: 700}}
-                    />
-                    <YAxis axisLine={false} tickLine={false} tick={{fill: '#94a3b8', fontSize: 10}} />
-                    <Tooltip 
-                      contentStyle={{borderRadius: '16px', border: 'none', boxShadow: '0 10px 30px rgba(0,0,0,0.1)'}}
-                    />
-                    <Bar 
-                      dataKey="revenue" 
-                      fill="#10b981" 
-                      radius={[10, 10, 0, 0]}
-                      activeBar={<Rectangle fill="#059669" />}
-                    />
-                  </BarChart>
+                  <PieChart>
+                    <Pie data={STOCK_STATUS_DATA} cx="50%" cy="50%" innerRadius={60} outerRadius={80} paddingAngle={8} dataKey="value" stroke="none">
+                      {STOCK_STATUS_DATA.map((entry, index) => (
+                        <Cell key={`cell-${index}`} fill={entry.color} />
+                      ))}
+                    </Pie>
+                    <Tooltip contentStyle={{borderRadius: '16px', border: 'none', boxShadow: '0 10px 25px -5px rgba(0,0,0,0.05)'}} />
+                  </PieChart>
                 </ResponsiveContainer>
+              </div>
+              <div className="mt-6 space-y-3">
+                {STOCK_STATUS_DATA.map((item, idx) => (
+                  <div key={idx} className="flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <div className="w-2.5 h-2.5 rounded-full" style={{backgroundColor: item.color}}></div>
+                      <span className="text-xs font-bold text-gray-500">{item.name}</span>
+                    </div>
+                    <span className="text-xs font-black text-gray-900 font-display">{item.value}</span>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
+        )}
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            {/* Payment Summary - Donut Chart */}
-            <div className="bg-white p-8 rounded-[2.5rem] border border-slate-100 shadow-sm flex flex-col">
-              <div className="flex items-center gap-3 mb-6">
-                <div className="bg-rose-50 text-rose-600 p-2.5 rounded-xl">
-                  <CreditCard size={20} />
-                </div>
+        {activeSubTab === 'Analytics' && (
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 animate-in slide-in-from-bottom-4 duration-500 pb-10">
+            {/* Top Selling Products */}
+            <div className="bg-white p-8 rounded-[2.5rem] border border-brand-100 shadow-sm">
+              <div className="flex items-center justify-between mb-8">
                 <div>
-                  <h3 className="text-lg font-black text-slate-800 leading-none">Payment Health</h3>
-                  <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Finance Breakdown</span>
+                  <h4 className="text-lg font-black font-display text-gray-900 tracking-tight">Top Selling Products</h4>
+                  <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Highest Volume SKUs</p>
+                </div>
+                <div className="p-2 bg-brand-50 text-brand-500 rounded-xl">
+                  <Package size={20} />
                 </div>
               </div>
-              <div className="flex-1 min-h-[250px]">
+              <div className="h-[300px] w-full">
+                <ResponsiveContainer width="100%" height="100%">
+                  <BarChart data={TOP_PRODUCTS}>
+                    <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
+                    <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{fill: '#94a3b8', fontSize: 10, fontWeight: 700}} dy={10} />
+                    <YAxis axisLine={false} tickLine={false} tick={{fill: '#94a3b8', fontSize: 10, fontWeight: 700}} />
+                    <Tooltip 
+                      cursor={{fill: '#f8fafc'}}
+                      contentStyle={{borderRadius: '16px', border: 'none', boxShadow: '0 10px 25px -5px rgba(0,0,0,0.1)', fontSize: '12px', fontWeight: 'bold'}}
+                    />
+                    <Bar dataKey="sales" radius={[8, 8, 0, 0]} barSize={40}>
+                      {TOP_PRODUCTS.map((entry, index) => (
+                        <Cell key={`cell-${index}`} fill={entry.color} />
+                      ))}
+                    </Bar>
+                  </BarChart>
+                </ResponsiveContainer>
+              </div>
+            </div>
+
+            {/* Retailer Performance */}
+            <div className="bg-white p-8 rounded-[2.5rem] border border-emerald-100 shadow-sm">
+              <div className="flex items-center justify-between mb-8">
+                <div>
+                  <h4 className="text-lg font-black font-display text-gray-900 tracking-tight">Retailer Performance</h4>
+                  <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Active Partner Orders</p>
+                </div>
+                <div className="p-2 bg-emerald-50 text-emerald-500 rounded-xl">
+                  <Users size={20} />
+                </div>
+              </div>
+              <div className="h-[300px] w-full">
+                <ResponsiveContainer width="100%" height="100%">
+                  <BarChart data={RETAILER_PERFORMANCE} layout="vertical">
+                    <CartesianGrid strokeDasharray="3 3" horizontal={false} stroke="#f1f5f9" />
+                    <XAxis type="number" axisLine={false} tickLine={false} tick={{fill: '#94a3b8', fontSize: 10, fontWeight: 700}} />
+                    <YAxis dataKey="name" type="category" axisLine={false} tickLine={false} tick={{fill: '#94a3b8', fontSize: 10, fontWeight: 700}} width={100} />
+                    <Tooltip 
+                      cursor={{fill: '#f8fafc'}}
+                      contentStyle={{borderRadius: '16px', border: 'none', boxShadow: '0 10px 25px -5px rgba(0,0,0,0.1)', fontSize: '12px', fontWeight: 'bold'}}
+                    />
+                    <Bar dataKey="orders" fill="#10b981" radius={[0, 8, 8, 0]} barSize={30} />
+                  </BarChart>
+                </ResponsiveContainer>
+              </div>
+            </div>
+
+            {/* Stock Summary (Detailed Donut) */}
+            <div className="bg-white p-8 rounded-[2.5rem] border border-brand-100 shadow-sm">
+              <div className="flex items-center justify-between mb-8">
+                <div>
+                  <h4 className="text-lg font-black font-display text-gray-900 tracking-tight">Stock Summary</h4>
+                  <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Warehouse Distribution</p>
+                </div>
+                <div className="p-2 bg-brand-50 text-brand-500 rounded-xl">
+                  <Activity size={20} />
+                </div>
+              </div>
+              <div className="h-[300px] w-full relative">
                 <ResponsiveContainer width="100%" height="100%">
                   <PieChart>
-                    <Pie
-                      data={PAYMENT_SUMMARY_DATA}
-                      cx="50%"
-                      cy="50%"
-                      innerRadius={60}
-                      outerRadius={85}
-                      paddingAngle={5}
+                    <Pie 
+                      data={STOCK_STATUS_DATA} 
+                      cx="50%" 
+                      cy="50%" 
+                      innerRadius={80} 
+                      outerRadius={100} 
+                      paddingAngle={5} 
                       dataKey="value"
+                      stroke="none"
                     >
-                      {PAYMENT_SUMMARY_DATA.map((entry, index) => (
-                        <Cell key={`cell-${index}`} fill={entry.color} cornerRadius={10} />
+                      {STOCK_STATUS_DATA.map((entry, index) => (
+                        <Cell key={`cell-${index}`} fill={entry.color} />
                       ))}
                     </Pie>
                     <Tooltip 
-                      contentStyle={{borderRadius: '16px', border: 'none', boxShadow: '0 10px 30px rgba(0,0,0,0.1)'}}
+                      contentStyle={{borderRadius: '16px', border: 'none', boxShadow: '0 10px 25px -5px rgba(0,0,0,0.1)', fontSize: '12px', fontWeight: 'bold'}}
                     />
-                    <Legend iconType="circle" />
+                    <Legend verticalAlign="bottom" height={36} iconType="circle" />
+                  </PieChart>
+                </ResponsiveContainer>
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center mt-[-18px]">
+                  <p className="text-[10px] font-black text-gray-400 uppercase">Total Units</p>
+                  <p className="text-3xl font-black font-display text-gray-900 leading-none">2,592</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Payment Status (Pie Chart) */}
+            <div className="bg-white p-8 rounded-[2.5rem] border border-amber-100 shadow-sm">
+              <div className="flex items-center justify-between mb-8">
+                <div>
+                  <h4 className="text-lg font-black font-display text-gray-900 tracking-tight">Payment Status</h4>
+                  <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Financial Clearance</p>
+                </div>
+                <div className="p-2 bg-amber-50 text-amber-500 rounded-xl">
+                  <CreditCard size={20} />
+                </div>
+              </div>
+              <div className="h-[300px] w-full">
+                <ResponsiveContainer width="100%" height="100%">
+                  <PieChart>
+                    <Pie 
+                      data={PAYMENT_STATUS_DATA} 
+                      cx="50%" 
+                      cy="50%" 
+                      outerRadius={100} 
+                      paddingAngle={0} 
+                      dataKey="value"
+                      stroke="#fff"
+                      strokeWidth={4}
+                    >
+                      {PAYMENT_STATUS_DATA.map((entry, index) => (
+                        <Cell key={`cell-${index}`} fill={entry.color} />
+                      ))}
+                    </Pie>
+                    <Tooltip 
+                      contentStyle={{borderRadius: '16px', border: 'none', boxShadow: '0 10px 25px -5px rgba(0,0,0,0.1)', fontSize: '12px', fontWeight: 'bold'}}
+                    />
+                    <Legend verticalAlign="bottom" height={36} iconType="circle" />
                   </PieChart>
                 </ResponsiveContainer>
               </div>
             </div>
-
-            {/* Stock Summary - Grouped Bar Chart */}
-            <div className="lg:col-span-2 bg-white p-8 rounded-[2.5rem] border border-slate-100 shadow-sm">
-               <div className="flex items-center gap-3 mb-8">
-                <div className="bg-violet-50 text-violet-600 p-2.5 rounded-xl">
-                  <Box size={20} />
-                </div>
-                <div>
-                  <h3 className="text-lg font-black text-slate-800 leading-none">Stock Levels vs Target</h3>
-                  <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Inventory Capacity</span>
-                </div>
-              </div>
-              <div className="h-[250px] w-full">
-                <ResponsiveContainer width="100%" height="100%">
-                  <BarChart data={STOCK_LEVELS_DATA}>
-                    <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
-                    <XAxis 
-                      dataKey="name" 
-                      axisLine={false} 
-                      tickLine={false}
-                      tick={{fill: '#64748b', fontSize: 10, fontWeight: 700}}
-                    />
-                    <YAxis axisLine={false} tickLine={false} tick={{fill: '#94a3b8', fontSize: 10}} />
-                    <Tooltip contentStyle={{borderRadius: '16px', border: 'none'}} />
-                    <Bar dataKey="current" fill="#8b5cf6" radius={[6, 6, 0, 0]} />
-                    <Bar dataKey="target" fill="#e2e8f0" radius={[6, 6, 0, 0]} />
-                  </BarChart>
-                </ResponsiveContainer>
-              </div>
-              <div className="mt-4 flex justify-center gap-6">
-                <div className="flex items-center gap-2">
-                  <div className="w-3 h-3 rounded-full bg-violet-500" />
-                  <span className="text-[10px] font-black uppercase text-slate-400">Current Stock</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <div className="w-3 h-3 rounded-full bg-slate-200" />
-                  <span className="text-[10px] font-black uppercase text-slate-400">Ideal Reorder Point</span>
-                </div>
-              </div>
-            </div>
           </div>
-        </div>
-      )}
+        )}
 
-      {/* Analytics Row - Visible on Overview only (simplified) */}
-      {activeSubTab === 'overview' && (
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 px-2 animate-in slide-in-from-bottom-4 duration-500">
-          {/* Revenue Area Chart */}
-          <div className="lg:col-span-2 bg-white p-8 rounded-[2.5rem] border border-slate-100 shadow-sm">
-            <div className="flex items-center justify-between mb-8">
-              <div>
-                <h2 className="text-xl font-black text-slate-800 tracking-tight">Sales Performance</h2>
-                <p className="text-xs font-bold text-slate-400 uppercase tracking-widest">Growth Analytics 2024</p>
-              </div>
-              <div className="flex gap-2">
-                <button className="px-4 py-2 bg-slate-50 text-slate-600 rounded-xl text-[10px] font-black uppercase tracking-widest border border-slate-100">Monthly</button>
-                <button className="px-4 py-2 bg-violet-600 text-white rounded-xl text-[10px] font-black uppercase tracking-widest shadow-lg shadow-violet-100">Weekly</button>
-              </div>
-            </div>
-            <div className="h-[300px] w-full">
-              <ResponsiveContainer width="100%" height="100%">
-                <AreaChart data={REVENUE_DATA}>
-                  <defs>
-                    <linearGradient id="colorRev" x1="0" x2="0" y2="1">
-                      <stop offset="5%" stopColor="#8b5cf6" stopOpacity={0.2}/>
-                      <stop offset="95%" stopColor="#8b5cf6" stopOpacity={0}/>
-                    </linearGradient>
-                  </defs>
-                  <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
-                  <XAxis 
-                    dataKey="name" 
-                    axisLine={false} 
-                    tickLine={false} 
-                    tick={{fill: '#94a3b8', fontSize: 10, fontWeight: 700}} 
-                    dy={10}
-                  />
-                  <YAxis 
-                    axisLine={false} 
-                    tickLine={false} 
-                    tick={{fill: '#94a3b8', fontSize: 10, fontWeight: 700}} 
-                  />
-                  <Tooltip 
-                    contentStyle={{
-                      borderRadius: '16px',
-                      border: 'none',
-                      boxShadow: '0 10px 30px rgba(0,0,0,0.1)',
-                      backgroundColor: '#1e293b',
-                      color: '#fff'
-                    }}
-                    itemStyle={{color: '#a78bfa', fontWeight: 'bold'}}
-                    labelStyle={{color: '#94a3b8', marginBottom: '4px', fontWeight: 'bold'}}
-                  />
-                  <Area 
-                    type="monotone" 
-                    dataKey="revenue" 
-                    stroke="#8b5cf6" 
-                    strokeWidth={4}
-                    fillOpacity={1} 
-                    fill="url(#colorRev)" 
-                  />
-                </AreaChart>
-              </ResponsiveContainer>
-            </div>
-          </div>
-
-          {/* Category Distribution Pie Chart */}
-          <div className="bg-white p-8 rounded-[2.5rem] border border-slate-100 shadow-sm flex flex-col">
-            <div className="mb-4">
-              <h2 className="text-xl font-black text-slate-800 tracking-tight">Product Mix</h2>
-              <p className="text-xs font-bold text-slate-400 uppercase tracking-widest">Current Stock Share</p>
-            </div>
-            <div className="flex-1 min-h-[300px] w-full">
-              <ResponsiveContainer width="100%" height="100%">
-                <PieChart>
-                  <Pie
-                    data={CATEGORY_DATA}
-                    cx="50%"
-                    cy="50%"
-                    innerRadius={60}
-                    outerRadius={100}
-                    paddingAngle={8}
-                    dataKey="value"
-                  >
-                    {CATEGORY_DATA.map((entry, index) => (
-                      <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} cornerRadius={8} />
-                    ))}
-                  </Pie>
-                  <Tooltip 
-                    contentStyle={{
-                      borderRadius: '16px',
-                      border: 'none',
-                      boxShadow: '0 10px 30px rgba(0,0,0,0.1)'
-                    }}
-                  />
-                  <Legend 
-                    verticalAlign="bottom" 
-                    height={36} 
-                    iconType="circle"
-                    wrapperStyle={{
-                      fontSize: '10px',
-                      fontWeight: 'bold',
-                      textTransform: 'uppercase',
-                      color: '#64748b'
-                    }}
-                  />
-                </PieChart>
-              </ResponsiveContainer>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Orders View */}
-      {activeSubTab === 'orders' && (
-        <div className="space-y-6 animate-in fade-in slide-in-from-bottom-6 duration-700">
-           {/* Orders Control Bar */}
-           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 px-2">
+        {activeSubTab === 'Orders' && (
+          <div className="bg-white rounded-[2.5rem] border border-gray-100 shadow-sm overflow-hidden">
+            <div className="p-8 border-b border-gray-50 flex items-center justify-between">
               <div className="flex items-center gap-3">
-                <div className="bg-violet-600 p-2.5 rounded-2xl text-white shadow-lg shadow-violet-100">
-                  <Package size={22} />
+                <div className="p-2 bg-slate-900 text-white rounded-xl">
+                  <ShoppingCart size={18} />
                 </div>
-                <div>
-                  <h2 className="text-xl font-black text-slate-800 tracking-tight leading-none">Order Management</h2>
-                  <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-1">Real-time fulfillment pipeline</p>
-                </div>
+                <h4 className="text-lg font-black font-display text-gray-900 tracking-tight">Recent Orders</h4>
               </div>
-              
-              <div className="flex items-center gap-2">
-                <div className="relative group flex-1 md:w-64">
-                   <Search size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" />
-                   <input 
-                    type="text" 
-                    placeholder="Search orders..." 
-                    className="w-full bg-white border border-slate-100 pl-10 pr-4 py-2.5 rounded-2xl text-xs font-bold focus:ring-4 focus:ring-violet-500/5 focus:border-violet-200 outline-none transition-all"
-                   />
-                </div>
-                <button className="bg-violet-600 text-white p-2.5 rounded-2xl hover:bg-violet-700 transition-all shadow-lg shadow-violet-100">
-                   <PlusCircle size={20} />
-                </button>
-              </div>
-           </div>
-
-           {/* Scrollable Orders Table */}
-           <div className="bg-white rounded-[2.5rem] border border-slate-100 shadow-sm mx-2 overflow-hidden">
-              <div className="overflow-x-auto no-scrollbar max-h-[600px] overflow-y-auto">
-                <table className="w-full text-left border-collapse">
-                  <thead className="sticky top-0 bg-white z-10">
-                    <tr className="border-b border-slate-50 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">
-                      <th className="px-8 py-6">Order ID</th>
-                      <th className="px-8 py-6">Retailer Partner</th>
-                      <th className="px-8 py-6">Timestamp</th>
-                      <th className="px-8 py-6">Items</th>
-                      <th className="px-8 py-6">Transaction Total</th>
-                      <th className="px-8 py-6">Fulfillment Status</th>
-                      <th className="px-8 py-6"></th>
+              <button className="text-[10px] font-black text-gray-400 uppercase tracking-widest hover:underline">View All Orders</button>
+            </div>
+            <div className="overflow-x-auto">
+              <table className="w-full text-left">
+                <thead>
+                  <tr className="bg-gray-50/50 text-[10px] font-black text-gray-400 uppercase tracking-widest">
+                    <th className="px-8 py-4">Reference</th>
+                    <th className="px-8 py-4">Partner</th>
+                    <th className="px-8 py-4">Status</th>
+                    <th className="px-8 py-4 text-right">Value</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-gray-50">
+                  {MOCK_RECENT_ORDERS.map((order, idx) => (
+                    <tr key={idx} className="hover:bg-brand-50/30 transition-colors">
+                      <td className="px-8 py-6 text-xs font-black font-mono text-gray-900">{order.id}</td>
+                      <td className="px-8 py-6 text-xs font-bold text-gray-500">{order.retailer}</td>
+                      <td className="px-8 py-6">
+                        <span className={`px-3 py-1 rounded-lg text-[9px] font-black uppercase tracking-wider border ${
+                          order.status === 'Delivered' ? 'bg-emerald-50 text-emerald-600 border-emerald-100' : 'bg-slate-50 text-slate-400 border-slate-100'
+                        }`}>
+                          {order.status}
+                        </span>
+                      </td>
+                      <td className="px-8 py-6 text-right text-xs font-black font-display text-gray-900">₹{order.total.toLocaleString()}</td>
                     </tr>
-                  </thead>
-                  <tbody className="divide-y divide-slate-50">
-                    {MOCK_RECENT_ORDERS.map((order) => {
-                      const StatusIcon = order.icon;
-                      return (
-                        <tr key={order.id} className="group hover:bg-slate-50/50 transition-colors">
-                          <td className="px-8 py-5">
-                            <span className="text-sm font-black text-slate-900 font-mono">{order.id}</span>
-                          </td>
-                          <td className="px-8 py-5">
-                            <div className="flex items-center gap-3">
-                              <div className="w-8 h-8 rounded-xl bg-slate-100 flex items-center justify-center text-[10px] font-black text-slate-500 group-hover:bg-white group-hover:shadow-sm transition-all">
-                                {order.retailer.charAt(0)}
-                              </div>
-                              <span className="text-sm font-bold text-slate-700">{order.retailer}</span>
-                            </div>
-                          </td>
-                          <td className="px-8 py-5">
-                            <span className="text-xs font-bold text-slate-400">{order.date}</span>
-                          </td>
-                          <td className="px-8 py-5">
-                            <div className="flex items-center gap-2">
-                               <Package size={14} className="text-slate-300" />
-                               <span className="text-xs font-black text-slate-600">{order.items} Units</span>
-                            </div>
-                          </td>
-                          <td className="px-8 py-5">
-                            <span className="text-sm font-black text-slate-800">${order.total.toLocaleString(undefined, { minimumFractionDigits: 2 })}</span>
-                          </td>
-                          <td className="px-8 py-5">
-                            <div className={`flex items-center gap-2 px-3 py-1.5 rounded-xl w-fit ${order.color}`}>
-                              <StatusIcon size={14} />
-                              <span className="text-[10px] font-black uppercase tracking-wider">{order.status}</span>
-                            </div>
-                          </td>
-                          <td className="px-8 py-5 text-right">
-                             <button className="p-2 text-slate-300 hover:text-violet-600 hover:bg-violet-50 rounded-xl transition-all">
-                                <ChevronRight size={18} />
-                             </button>
-                          </td>
-                        </tr>
-                      );
-                    })}
-                  </tbody>
-                </table>
-              </div>
-              
-              {/* Table Footer / Pagination Placeholder */}
-              <div className="px-8 py-4 border-t border-slate-50 bg-slate-50/30 flex items-center justify-between">
-                 <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Showing 8 of 124 active orders</p>
-                 <div className="flex items-center gap-2">
-                    <button className="px-4 py-2 bg-white border border-slate-100 rounded-xl text-[10px] font-black text-slate-400 uppercase tracking-widest hover:text-violet-600 transition-all">Prev</button>
-                    <button className="px-4 py-2 bg-white border border-slate-100 rounded-xl text-[10px] font-black text-slate-400 uppercase tracking-widest hover:text-violet-600 transition-all">Next</button>
-                 </div>
-              </div>
-           </div>
-        </div>
-      )}
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        )}
 
-      {/* Inventory View - Now with Inventory Alerts */}
-      {activeSubTab === 'inventory' && (
-        <div className="space-y-6 animate-in fade-in slide-in-from-bottom-6 duration-700">
-           {/* Inventory Header */}
-           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 px-2">
-              <div className="flex items-center gap-3">
-                <div className="bg-emerald-600 p-2.5 rounded-2xl text-white shadow-lg shadow-emerald-100">
-                  <Box size={22} />
+        {activeSubTab === 'Inventory' && (
+          <div className="bg-white p-8 rounded-[2.5rem] border border-brand-100 shadow-sm">
+             <div className="flex items-center gap-3 mb-8">
+                <div className="p-3 bg-gray-50 text-brand-600 rounded-2xl">
+                  <Package size={24} />
                 </div>
                 <div>
-                  <h2 className="text-xl font-black text-slate-800 tracking-tight leading-none">Inventory Health</h2>
-                  <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-1">Real-time stock monitoring & alerts</p>
+                  <h4 className="text-lg font-black font-display text-gray-900 tracking-tight">Inventory Alerts</h4>
+                  <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mt-1">Real-time stock monitoring</p>
                 </div>
-              </div>
-              <div className="flex gap-2">
-                <button className="p-2.5 bg-white border border-slate-100 rounded-2xl text-slate-400 hover:text-violet-600 transition-all">
-                  <RefreshCcw size={20} />
-                </button>
-                <button className="p-2.5 bg-white border border-slate-100 rounded-2xl text-slate-400 hover:text-violet-600 transition-all">
-                  <History size={20} />
-                </button>
-              </div>
-           </div>
-
-           {/* Alerts Grid */}
-           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 px-2">
-              {INVENTORY_ALERTS.map((alert) => {
-                const Icon = alert.icon;
-                const progress = (alert.stock / alert.target) * 100;
-                return (
-                  <div key={alert.id} className="bg-white p-8 rounded-[2.5rem] border border-slate-100 shadow-sm flex flex-col group hover:border-violet-100 transition-all">
-                    <div className="flex items-start justify-between mb-6">
-                      <div className={`p-3 rounded-2xl ${alert.color} border transition-transform group-hover:scale-110`}>
-                        <Icon size={24} />
-                      </div>
-                      <div className={`px-3 py-1 rounded-lg text-[9px] font-black uppercase tracking-widest ${
-                        alert.severity === 'Critical' ? 'bg-rose-100 text-rose-600' : 
-                        alert.severity === 'Warning' ? 'bg-amber-100 text-amber-600' : 
-                        'bg-blue-100 text-blue-600'
-                      }`}>
-                        {alert.severity}
-                      </div>
-                    </div>
-
-                    <div className="flex-1">
-                      <h4 className="text-sm font-black text-slate-800 mb-1">{alert.product}</h4>
-                      <p className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.1em]">{alert.type}</p>
-                      
-                      <div className="mt-6 space-y-2">
-                        <div className="flex justify-between text-[10px] font-black uppercase tracking-widest">
-                          <span className="text-slate-400">Current Stock</span>
-                          <span className={alert.stock === 0 ? 'text-rose-600' : 'text-slate-800'}>{alert.stock} / {alert.target}</span>
-                        </div>
-                        <div className="h-2 w-full bg-slate-50 rounded-full overflow-hidden">
-                          <div 
-                            className={`h-full rounded-full transition-all duration-1000 ${
-                              alert.stock === 0 ? 'bg-rose-500' : 
-                              progress < 30 ? 'bg-amber-500' : 
-                              'bg-violet-500'
-                            }`}
-                            style={{ width: `${Math.min(progress, 100)}%` }}
-                          />
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="mt-8 pt-6 border-t border-slate-50 flex items-center justify-between">
-                       <button className="flex items-center gap-2 text-[10px] font-black uppercase text-violet-600 hover:translate-x-1 transition-transform">
-                          Resolve Alert <ArrowRight size={12} />
-                       </button>
-                       <span className="text-[9px] font-black text-slate-300 uppercase">Alert #{alert.id}</span>
-                    </div>
-                  </div>
-                );
-              })}
-
-              {/* Add Manual Alert Card */}
-              <button className="bg-slate-50 p-8 rounded-[2.5rem] border border-dashed border-slate-200 flex flex-col items-center justify-center gap-4 group hover:bg-white hover:border-violet-200 transition-all">
-                 <div className="w-14 h-14 rounded-full bg-white flex items-center justify-center text-slate-300 group-hover:text-violet-500 group-hover:shadow-lg transition-all">
-                    <PlusCircle size={32} />
+             </div>
+             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+               {STOCK_STATUS_DATA.map((item, i) => (
+                 <div key={i} className="p-5 bg-gray-50/50 rounded-2xl flex items-center justify-between group hover:bg-white hover:shadow-lg transition-all border border-transparent hover:border-gray-100">
+                   <div className="flex items-center gap-3">
+                     <div className="w-3 h-3 rounded-full" style={{backgroundColor: item.color}}></div>
+                     <span className="text-sm font-bold text-gray-700">{item.name}</span>
+                   </div>
+                   <span className="text-sm font-black font-display text-gray-900">{item.value} Units</span>
                  </div>
-                 <div className="text-center">
-                    <p className="text-sm font-black text-slate-400 group-hover:text-slate-600">Manual Check</p>
-                    <p className="text-[10px] font-bold text-slate-300 uppercase tracking-widest">Flag item for review</p>
-                 </div>
-              </button>
-           </div>
-        </div>
-      )}
-
-      {/* Quick Actions & Activity Feed - Only visible on main Overview */}
-      {activeSubTab === 'overview' && (
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 px-2 animate-in fade-in slide-in-from-bottom-4 duration-700">
-          {/* Quick Actions */}
-          <div className="lg:col-span-1 space-y-4">
-            <h2 className="text-lg font-black text-slate-800 tracking-tight ml-2">Direct Access</h2>
-            <div className="grid grid-cols-2 gap-3">
-              {quickActions.map((action, i) => (
-                <button key={i} className="bg-white p-6 rounded-[2rem] border border-slate-100 shadow-sm flex flex-col items-center gap-3 group hover:bg-slate-50 transition-all active:scale-95">
-                  <div className={`${action.bgColor} ${action.color} p-4 rounded-2xl transition-transform group-hover:scale-110`}>
-                    <action.icon size={24} />
-                  </div>
-                  <span className="text-xs font-black text-slate-700 tracking-tight text-center leading-tight">{action.label}</span>
-                </button>
-              ))}
-            </div>
+               ))}
+             </div>
           </div>
-
-          {/* Activity Feed */}
-          <div className="lg:col-span-2 bg-white rounded-[2.5rem] border border-slate-100 shadow-sm p-8 flex flex-col">
-            <div className="flex items-center justify-between mb-8">
-              <h2 className="text-xl font-black text-slate-800 tracking-tight">Recent Activity</h2>
-              <button className="text-violet-600 text-xs font-bold hover:underline">Full Audit Trail</button>
-            </div>
-            <div className="space-y-6 flex-1">
-              {[
-                { type: 'order', title: 'New Order: Choco Cookies x50', user: 'Sweet Bites Cafe', time: '2 mins ago', color: 'bg-violet-500' },
-                { type: 'stock', title: 'Low Stock: Rose Mist Perfume', user: 'Inventory System', time: '45 mins ago', color: 'bg-rose-500' },
-                { type: 'order', title: 'Batch Shipped: Berry Juice Pack', user: 'Express Logistics', time: '2 hours ago', color: 'bg-blue-500' },
-                { type: 'retailer', title: 'New Retailer: Gourmet Plaza', user: 'Admin Onboarding', time: '5 hours ago', color: 'bg-emerald-500' },
-                { type: 'payment', title: 'Invoice Paid: $1,250', user: 'Fragrance World', time: '8 hours ago', color: 'bg-violet-400' },
-              ].map((activity, i) => (
-                <div key={i} className="flex items-center gap-4 group">
-                  <div className={`w-2 h-10 rounded-full ${activity.color} opacity-20 group-hover:opacity-100 transition-opacity`}></div>
-                  <div className="flex-1">
-                    <h4 className="text-sm font-black text-slate-800">{activity.title}</h4>
-                    <p className="text-xs text-slate-400 font-bold">{activity.user}</p>
-                  </div>
-                  <span className="text-[10px] font-black text-slate-300 uppercase">{activity.time}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 };

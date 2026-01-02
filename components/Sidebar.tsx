@@ -7,7 +7,7 @@ import {
   Moon
 } from 'lucide-react';
 import { MAIN_MENU_ITEMS, FOOTER_MENU_ITEMS } from '../constants';
-import { Theme, MenuItem } from '../types';
+import { Theme } from '../types';
 
 interface SidebarProps {
   activeId: string;
@@ -19,139 +19,123 @@ interface SidebarProps {
 }
 
 const Sidebar: React.FC<SidebarProps> = ({ activeId, onSelect, theme, onThemeToggle, isCollapsed, onToggle }) => {
+  const isDarkMode = theme === Theme.DARK;
+
   // Group items by section
   const sections = MAIN_MENU_ITEMS.reduce((acc, item) => {
-    const section = item.section || 'General';
+    const section = item.section || 'MAIN NAVIGATION';
     if (!acc[section]) acc[section] = [];
     acc[section].push(item);
     return acc;
-  }, {} as Record<string, MenuItem[]>);
+  }, {} as Record<string, typeof MAIN_MENU_ITEMS>);
 
   return (
     <aside className="p-4 h-screen sticky top-0 z-50 pointer-events-none">
       <div 
-        className={`h-full flex flex-col bg-white transition-all duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] shadow-[0_20px_50px_-15px_rgba(0,0,0,0.15)] overflow-hidden rounded-[2.5rem] border border-white/50 pointer-events-auto
-          ${isCollapsed ? 'w-20' : 'w-64'}`}
+        className={`h-full flex flex-col transition-all duration-500 shadow-2xl overflow-hidden rounded-[2.5rem] border pointer-events-auto
+          ${isCollapsed ? 'w-20' : 'w-64'}
+          ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-white border-gray-100'}`}
       >
-        {/* Header Profile Section */}
-        <div className={`p-4 transition-colors duration-300 ${isCollapsed ? '' : 'bg-slate-50/50'}`}>
-          <div className="flex items-center gap-2">
-            {/* Logo Section */}
-            <div className="relative group shrink-0">
-              <div className={`${isCollapsed ? 'w-9 h-9' : 'w-10 h-10'} rounded-2xl border-2 border-white shadow-sm bg-white flex items-center justify-center overflow-hidden transition-all group-hover:scale-110`}>
-                 <img src="https://picsum.photos/seed/hamsaa/100/100" alt="Logo" className="w-full h-full object-cover" />
-              </div>
-              <div className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-green-500 border-2 border-white rounded-full"></div>
-            </div>
-            
+        {/* Sidebar Header */}
+        <div className={`p-6 flex flex-col ${isCollapsed ? 'items-center' : 'items-start'}`}>
+          <div className={`flex items-center w-full ${isCollapsed ? 'justify-center' : 'justify-between'}`}>
             {!isCollapsed && (
-              <div className="flex flex-col flex-1 min-w-0 animate-in fade-in slide-in-from-left-2 duration-300">
-                <span className="text-lg font-black text-slate-800 tracking-tight leading-none truncate">HAMSAA</span>
-                <div className="flex items-center justify-between mt-1">
-                  <span className="text-[10px] uppercase tracking-widest font-bold text-violet-500 truncate">Manager Pro</span>
-                  <button 
-                    onClick={onToggle}
-                    className="p-1.5 rounded-lg hover:bg-violet-50 transition-all text-slate-400 hover:text-violet-600 ml-1"
-                    title="Collapse Sidebar"
-                  >
-                    <PanelLeftClose size={16} />
-                  </button>
-                </div>
+              <div className="flex flex-col animate-in fade-in slide-in-from-left-2 duration-300">
+                <span className={`text-xl font-black font-display tracking-tighter leading-none ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>HAMSAA</span>
+                <span className="text-[9px] uppercase tracking-[0.2em] font-black font-display text-brand-500 mt-0.5">Management</span>
               </div>
             )}
-            
-            {isCollapsed && (
-              <button 
-                onClick={onToggle}
-                className="p-1.5 rounded-lg hover:bg-violet-50 transition-all text-slate-400 hover:text-violet-600 ml-auto"
-                title="Expand Sidebar"
-              >
-                <PanelLeftOpen size={16} />
-              </button>
-            )}
+
+            <button 
+              onClick={onToggle}
+              className={`p-2.5 rounded-xl transition-all ${isDarkMode ? 'hover:bg-slate-800 text-slate-500' : 'hover:bg-gray-50 text-gray-400 hover:text-brand-600'}`}
+            >
+              {isCollapsed ? <PanelLeftOpen size={20} /> : <PanelLeftClose size={18} />}
+            </button>
           </div>
         </div>
 
-        {/* Navigation Items - Scrollbar hidden visually */}
-        <nav className="flex-1 overflow-y-auto no-scrollbar px-3 py-4 space-y-6">
+        {/* Navigation Items grouped by Sections */}
+        <nav className="flex-1 overflow-y-auto no-scrollbar px-4 py-2">
           {Object.entries(sections).map(([sectionName, items]) => (
-            <div key={sectionName} className="space-y-1">
+            <div key={sectionName} className="mb-6">
               {!isCollapsed && (
-                <div className="px-4 mb-2">
-                  <span className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] animate-in fade-in duration-500">
-                    {sectionName}
-                  </span>
-                </div>
+                <h3 className="px-4 mb-2 text-[10px] font-black text-gray-400 uppercase tracking-widest leading-none">
+                  {sectionName}
+                </h3>
               )}
-              {items.map((item) => {
-                const isActive = activeId === item.id;
-                const Icon = item.icon;
-                
-                return (
-                  <button
-                    key={item.id}
-                    onClick={() => onSelect(item.id)}
-                    className={`w-full flex items-center gap-3 p-3 rounded-2xl transition-all group relative
-                      ${isActive 
-                        ? 'bg-violet-600 text-white shadow-lg shadow-violet-200' 
-                        : 'text-slate-500 hover:bg-violet-50/50 hover:text-violet-600'
-                      }`}
-                  >
-                    <Icon size={20} className={`shrink-0 transition-transform duration-300 ${isActive ? 'text-white' : 'group-hover:scale-110'}`} />
-                    {!isCollapsed && (
-                      <span className="text-sm font-bold whitespace-nowrap animate-in fade-in duration-300">{item.label}</span>
-                    )}
-                    {isCollapsed && (
-                      <div className="absolute left-20 px-3 py-1.5 bg-slate-900 text-white text-[10px] font-bold rounded-lg opacity-0 group-hover:opacity-100 pointer-events-none transition-all translate-x-[-10px] group-hover:translate-x-0 z-50 whitespace-nowrap uppercase tracking-widest shadow-xl">
-                        {item.label}
-                      </div>
-                    )}
-                    {isActive && !isCollapsed && (
-                      <div className="ml-auto w-1.5 h-1.5 bg-white rounded-full animate-pulse" />
-                    )}
-                  </button>
-                );
-              })}
+              <div className="space-y-1">
+                {items.map((item) => {
+                  const isActive = activeId === item.id;
+                  const Icon = item.icon;
+                  
+                  return (
+                    <button
+                      key={item.id}
+                      onClick={() => onSelect(item.id)}
+                      className={`w-full flex items-center gap-3.5 p-3.5 rounded-2xl transition-all duration-300 group relative
+                        ${isActive 
+                          ? 'bg-brand-600 text-white' 
+                          : isDarkMode 
+                            ? 'text-slate-400 hover:bg-slate-800 hover:text-white'
+                            : 'text-gray-400 hover:bg-brand-50 hover:text-brand-600'
+                        } ${isCollapsed ? 'justify-center' : ''}`}
+                    >
+                      <Icon size={18} className={`shrink-0 ${isActive ? 'scale-110' : 'group-hover:scale-110 transition-transform'}`} />
+                      {!isCollapsed && <span className="text-sm font-bold tracking-tight whitespace-nowrap">{item.label}</span>}
+                      {isActive && !isCollapsed && (
+                        <div className="absolute right-3 w-1.5 h-1.5 bg-white/40 rounded-full"></div>
+                      )}
+                      
+                      {isCollapsed && (
+                        <div className={`absolute left-full ml-4 px-3 py-1.5 bg-brand-950 text-white text-[10px] font-black rounded-lg opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-50 whitespace-nowrap shadow-xl border border-white/10 uppercase tracking-widest`}>
+                          {item.label}
+                        </div>
+                      )}
+                    </button>
+                  );
+                })}
+              </div>
             </div>
           ))}
         </nav>
 
-        {/* Footer Section */}
-        <div className="px-3 py-4 border-t border-slate-100 space-y-1 bg-white/50 backdrop-blur-sm">
+        {/* Footer with Theme Toggle */}
+        <div className="px-4 py-6 border-t border-gray-50 space-y-1.5">
           {FOOTER_MENU_ITEMS.map((item) => {
             const Icon = item.icon;
-            const isLogout = item.id === 'logout';
             return (
               <button
                 key={item.id}
                 onClick={() => onSelect(item.id)}
-                className={`w-full flex items-center gap-3 p-3 rounded-2xl transition-all group relative
-                  ${isLogout ? 'text-slate-400 hover:bg-rose-50 hover:text-rose-500' : 'text-slate-500 hover:bg-slate-50 hover:text-violet-600'}`}
+                className={`w-full flex items-center gap-3.5 p-3.5 rounded-2xl transition-all group
+                   ${isDarkMode ? 'text-slate-500 hover:text-white' : 'text-gray-400 hover:text-brand-600 hover:bg-brand-50'} ${isCollapsed ? 'justify-center' : ''}`}
               >
-                <Icon size={20} className="shrink-0 transition-transform group-hover:rotate-12" />
-                {!isCollapsed && <span className="text-sm font-bold">{item.label}</span>}
-                {isCollapsed && (
-                   <div className="absolute left-20 px-3 py-1.5 bg-slate-900 text-white text-[10px] font-bold rounded-lg opacity-0 group-hover:opacity-100 pointer-events-none transition-all translate-x-[-10px] group-hover:translate-x-0 z-50 whitespace-nowrap uppercase tracking-widest shadow-xl">
-                     {item.label}
-                   </div>
-                )}
+                <Icon size={18} className="shrink-0" />
+                {!isCollapsed && <span className="text-sm font-bold tracking-tight">{item.label}</span>}
               </button>
             );
           })}
 
-          {/* Theme Toggle */}
-          <div className={`mt-3 p-1.5 bg-slate-100/80 rounded-[1.2rem] flex items-center ${isCollapsed ? 'flex-col gap-1' : 'justify-between'}`}>
+          {/* Fixed: Completed missing JSX and added theme toggle buttons */}
+          <div className={`mt-4 p-1.5 rounded-2xl flex items-center ${isDarkMode ? 'bg-slate-800' : 'bg-gray-50'} ${isCollapsed ? 'flex-col gap-1' : 'justify-between'}`}>
             <button 
-              onClick={onThemeToggle}
-              className={`p-2 rounded-xl transition-all flex-1 flex justify-center ${theme === Theme.LIGHT ? 'bg-white shadow-sm text-violet-600' : 'text-slate-500 hover:text-violet-400'}`}
+              onClick={() => onThemeToggle()}
+              className={`p-2 rounded-xl transition-all flex-1 flex items-center justify-center ${!isDarkMode 
+                ? 'bg-white shadow-sm text-brand-600' 
+                : 'text-gray-400 hover:text-gray-200'}`}
             >
-              <Sun size={18} />
+              <Sun size={16} />
+              {!isCollapsed && <span className="ml-2 text-[10px] font-black uppercase tracking-wider">Light</span>}
             </button>
             <button 
-              onClick={onThemeToggle}
-              className={`p-2 rounded-xl transition-all flex-1 flex justify-center ${theme === Theme.DARK ? 'bg-white shadow-sm text-violet-600' : 'text-slate-500 hover:text-violet-400'}`}
+              onClick={() => onThemeToggle()}
+              className={`p-2 rounded-xl transition-all flex-1 flex items-center justify-center ${isDarkMode 
+                ? 'bg-slate-700 text-white shadow-sm' 
+                : 'text-slate-500 hover:text-slate-700'}`}
             >
-              <Moon size={18} />
+              <Moon size={16} />
+              {!isCollapsed && <span className="ml-2 text-[10px] font-black uppercase tracking-wider">Dark</span>}
             </button>
           </div>
         </div>
@@ -160,4 +144,5 @@ const Sidebar: React.FC<SidebarProps> = ({ activeId, onSelect, theme, onThemeTog
   );
 };
 
+// Fixed: Added missing default export
 export default Sidebar;

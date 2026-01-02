@@ -3,16 +3,13 @@ import {
   LayoutGrid, 
   Box, 
   ShoppingCart, 
-  Package, 
   FileText, 
-  DollarSign, 
-  Store, 
-  Factory, 
-  Users, 
-  RotateCcw, 
-  ShieldAlert, 
+  CreditCard,
+  Truck, 
+  RotateCcw,
   BarChart3, 
-  Bell, 
+  ShieldCheck,
+  Bell,
   Settings,
   HelpCircle,
   LogOut
@@ -20,32 +17,22 @@ import {
 import { MenuItem } from './types';
 
 export const MAIN_MENU_ITEMS: MenuItem[] = [
-  // General Section
-  { id: 'dashboard', label: 'Dashboard', icon: LayoutGrid, path: '/', section: 'General' },
+  { id: 'dashboard', label: 'Dashboard', icon: LayoutGrid, path: '/' },
+  { id: 'inventory', label: 'Inventory', icon: Box, path: '/inventory' },
+  { id: 'purchase-orders', label: 'Purchase Orders', icon: ShoppingCart, path: '/purchase-orders' },
+  { id: 'billing', label: 'Billing', icon: FileText, path: '/billing' },
+  { id: 'payment', label: 'Payments', icon: CreditCard, path: '/payment' },
+  { id: 'distributors', label: 'All Distributors', icon: Truck, path: '/distributors' },
   
-  // Sales & Inventory
-  { id: 'inventory', label: 'Inventory', icon: Box, path: '/inventory', section: 'Supply Chain' },
-  { id: 'purchase-orders', label: 'Purchase Orders', icon: ShoppingCart, path: '/purchase-orders', section: 'Supply Chain' },
-  { id: 'orders', label: 'Orders', icon: Package, path: '/orders', section: 'Supply Chain' },
+  { id: 'returns', label: 'Returns', icon: RotateCcw, path: '/returns', section: 'REPORTS & COMPLIANCE' },
+  { id: 'reports', label: 'Reports', icon: BarChart3, path: '/reports', section: 'REPORTS & COMPLIANCE' },
+  { id: 'compliance', label: 'Compliance', icon: ShieldCheck, path: '/compliance', section: 'REPORTS & COMPLIANCE' },
   
-  // Finance
-  { id: 'billing', label: 'Billing', icon: FileText, path: '/billing', section: 'Finance' },
-  { id: 'payment', label: 'Payment', icon: DollarSign, path: '/payment', section: 'Finance' },
-  
-  // Partners & HR
-  { id: 'retailers', label: 'All Retailers', icon: Store, path: '/retailers', section: 'Partners' },
-  { id: 'manufacturers', label: 'All Manufacturers', icon: Factory, path: '/manufacturers', section: 'Partners' },
-  { id: 'employees', label: 'Employees', icon: Users, path: '/employees', section: 'Management' },
-  
-  // Support & Analytics
-  { id: 'returns', label: 'Returns', icon: RotateCcw, path: '/returns', section: 'Support' },
-  { id: 'complaints', label: 'Complaints', icon: ShieldAlert, path: '/complaints', section: 'Support' },
-  { id: 'reports', label: 'Reports', icon: BarChart3, path: '/reports', section: 'Analytics' },
-  { id: 'notifications', label: 'Notifications', icon: Bell, path: '/notifications', section: 'System' },
-  { id: 'settings', label: 'Settings', icon: Settings, path: '/settings', section: 'System' },
+  { id: 'notifications', label: 'Notifications', icon: Bell, path: '/notifications', section: 'SYSTEM' },
+  { id: 'settings', label: 'Settings', icon: Settings, path: '/settings', section: 'SYSTEM' },
 ];
 
 export const FOOTER_MENU_ITEMS: MenuItem[] = [
-  { id: 'help', label: 'Help', icon: HelpCircle, path: '/help' },
-  { id: 'logout', label: 'Log out', icon: LogOut, path: '/logout' },
+  { id: 'help', label: 'Help & Support', icon: HelpCircle, path: '/help' },
+  { id: 'logout', label: 'Logout Session', icon: LogOut, path: '/logout' },
 ];

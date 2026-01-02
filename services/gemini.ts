@@ -1,7 +1,7 @@
-
 import { GoogleGenAI } from "@google/genai";
 
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY || '' });
+// Always use the process.env.API_KEY string directly and use a named parameter for initialization.
+const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
 
 export const getBusinessInsight = async (query: string) => {
   try {
@@ -13,9 +13,12 @@ export const getBusinessInsight = async (query: string) => {
       config: {
         temperature: 0.7,
         topP: 0.95,
+        // When setting maxOutputTokens, thinkingConfig: { thinkingBudget } must also be set for Gemini 3 series models.
         maxOutputTokens: 500,
+        thinkingConfig: { thinkingBudget: 250 },
       }
     });
+    // Use the .text property directly from GenerateContentResponse.
     return response.text;
   } catch (error) {
     console.error("Gemini Error:", error);
